@@ -56,7 +56,6 @@ const SIMILAR_AD_VARIABLES = 6;
 const similarAds = new Array(SIMILAR_AD_VARIABLES).fill('').map(() => createAd());
 
 export {
-  createAd,
   similarAds
 };
 
