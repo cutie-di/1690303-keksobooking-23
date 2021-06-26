@@ -19,6 +19,29 @@ const LNG_X_LAST = 35.70000;
 const LAT_Y_FIRST = 139.70000;
 const LAT_Y_LAST = 139.80000;
 
+const ROOMS = {
+  min: 1,
+  max: 12,
+};
+
+const GUESTS = {
+  min: 1,
+  max: 15,
+};
+
+const PRICE = {
+  min: 120,
+  max: 700,
+};
+
+const HOUSING_TYPE = {
+  'flat': 'Квартира',
+  'palace': 'Дворец',
+  'bungalo': 'Бунгало',
+  'house': 'Дом',
+  'hotel': 'Отель',
+};
+
 const avatarURL = () => {
   const numberAvatar = getInteger(1, 10);
   //  return (numberAvatar < 10) ? `img/avatars/user${0}${numberAvatar}.png` : `img/avatars/user${numberAvatar}.png`;
@@ -39,10 +62,10 @@ const createAd = () => {
     offer: {
       title: getRandomElement(TITLES),
       address: `${LNG_X}, ${LAT_Y}`,
-      price: getInteger(85, 150),
+      price: getInteger(PRICE.min, PRICE.max),
       type: getRandomElement(TYPE),
-      rooms: getInteger(1, 8),
-      guests: getInteger(1, 12),
+      rooms: getInteger(ROOMS.min, ROOMS.max),
+      guests: getInteger(GUESTS.min, GUESTS.max),
       checkin: getRandomElement(CHECKIN),
       checkout: getRandomElement(CHECKOUT),
       features: getRandomElement(FEATURES),
@@ -52,11 +75,18 @@ const createAd = () => {
   };
 };
 
+const newCardData = createAd();
+
 const SIMILAR_AD_VARIABLES = 6;
 const similarAds = new Array(SIMILAR_AD_VARIABLES).fill('').map(() => createAd());
 
 export {
-  similarAds
+  similarAds,
+  newCardData
+};
+
+export {
+  HOUSING_TYPE
 };
 
 /* eslint-disable no-console */
