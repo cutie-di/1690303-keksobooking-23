@@ -1,7 +1,8 @@
 import {
   getInteger,
   getFractionalNumber,
-  getRandomElement
+  getRandomElement,
+  getRandomSubArray
 } from './utils.js';
 
 const TITLES = ['Квартира в центре города', 'Домик у моря', 'Вилла у виноградников', 'Особняк рядом с фермой', 'Коттедж у озера'];
@@ -30,8 +31,8 @@ const GUESTS = {
 };
 
 const PRICE = {
-  min: 120,
-  max: 700,
+  min: 4000,
+  max: 14000,
 };
 
 const HOUSING_TYPE = {
@@ -47,6 +48,7 @@ const avatarURL = () => {
   //  return (numberAvatar < 10) ? `img/avatars/user${0}${numberAvatar}.png` : `img/avatars/user${numberAvatar}.png`;
   return `img/avatars/user${numberAvatar < 10 ? 0 : ''}${numberAvatar}.png`;
 };
+
 
 const createAd = () => {
   const LNG_X = getFractionalNumber(LNG_X_FIRST, LNG_X_LAST, 5);
@@ -68,21 +70,18 @@ const createAd = () => {
       guests: getInteger(GUESTS.min, GUESTS.max),
       checkin: getRandomElement(CHECKIN),
       checkout: getRandomElement(CHECKOUT),
-      features: getRandomElement(FEATURES),
-      descripton: getRandomElement(DESCRIPTION),
-      photos: getRandomElement(PHOTOS),
+      features: getRandomSubArray(FEATURES),
+      description: getRandomElement(DESCRIPTION),
+      photos: getRandomSubArray(PHOTOS),
     },
   };
 };
-
-const newCardData = createAd();
 
 const SIMILAR_AD_VARIABLES = 6;
 const similarAds = new Array(SIMILAR_AD_VARIABLES).fill('').map(() => createAd());
 
 export {
-  similarAds,
-  newCardData
+  similarAds
 };
 
 export {
@@ -90,6 +89,5 @@ export {
 };
 
 /* eslint-disable no-console */
-//createAd();
-//console.log(similarAds);
+
 /* eslint-enable no-console */

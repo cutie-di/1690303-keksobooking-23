@@ -1,15 +1,64 @@
 import {
-  getCorrectRoomsEnding,
-  getCorrectGuestsEnding,
-  createFeatures,
-  createPhotos
-} from './utils.js';
-
-import {
   HOUSING_TYPE
 } from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+
+const getCorrectRoomsEnding = (roomNumber) => {
+  switch (roomNumber) {
+    case 1:
+      return 'комната';
+    case 2:
+    case 3:
+    case 4:
+      return 'комнаты';
+    default:
+      return 'комнат';
+  }
+};
+
+const getCorrectGuestsEnding = (guestsNumber) => {
+  if (guestsNumber === 0) {
+    return 'не для гостей';
+  }
+  if (guestsNumber > 1) {
+    return 'гостей';
+  }
+  return 'гостя';
+};
+
+const createFeatures = (features) => {
+  const fragment = document.createDocumentFragment();
+
+  features.forEach((feature) => {
+    const li = document.createElement('li');
+    li.classList.add('popup__feature', `popup__feature--${feature}`);
+    fragment.appendChild(li);
+  });
+  return fragment;
+};
+
+const createPhotos = (photos) => {
+  const fragment = document.createDocumentFragment();
+
+  photos.forEach((photoUrl) => {
+    const img = document.createElement('img');
+    img.src = photoUrl;
+    img.classList.add('popup__photo');
+    img.alt = 'Фотография жилья';
+    fragment.appendChild(img);
+  });
+  return fragment;
+};
+
+const removeEmptyElements = (data) => {
+  const elements = Array.from(data.children);
+  elements.forEach((element) => {
+    if (data.length === 0) {
+      element.style.display = 'none';
+    }
+  });
+};
 
 const createCard = ({
   author,
@@ -23,35 +72,23 @@ const createCard = ({
   newCard.querySelector('.popup__text--address').textContent = offer.address;
   newCard.querySelector('.popup__text--price').textContent = HOUSING_TYPE[offer.type];
   newCard.querySelector('.popup__type').textContent = `${offer.price} ₽/ночь`;
-  newCard.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${getCorrectRoomsEnding} для ${offer.guests} ${getCorrectGuestsEnding}`;
-  newCard.querySelector('.popup__text--time').textContent = `Заезд после ${offer.title}, выезд до ${offer.checkout}`;
+  newCard.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${getCorrectRoomsEnding(offer.rooms)} для ${offer.guests} ${getCorrectGuestsEnding(offer.guests)}`;
+  newCard.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
-  const featureItems = cardTemplate.querySelector('.popup__features').children;
-  featureItems.innerHTML = '';
+  const featureContainer = newCard.querySelector('.popup__features');
+  featureContainer.innerHTML = '';
   const newFeatureElements = createFeatures(offer.features);
-  featureItems.appendChild(newFeatureElements);
+  featureContainer.appendChild(newFeatureElements);
 
-  const photoItems = cardTemplate.querySelector('.popup__features').children;
-  photoItems.innerHTML = '';
+  const photoContainer = newCard.querySelector('.popup__photos');
+  photoContainer.innerHTML = '';
   const newPhotoElements = createPhotos(offer.photos);
-  photoItems.appendChild(newPhotoElements);
+  photoContainer.appendChild(newPhotoElements);
 
 
-  // Если отсутствует описание, соответствующий блок в карточке скрывается
-  // Два варианта, как лучше?
   newCard.querySelector('.popup__description').textContent = offer.description;
 
-  //const newCardDecription = newCard.querySelector('.description');
-  //if (newCard.querySelector('.popup__description').length === 0) {
-  //  newCardDecription.style.display = 'none';
-  //}
-
-  // или так, чтобы было для всех, а не только для описания? Тогда как указать класс?
-
-  //const element = newCard.querySelector();
-  //if (value.length === 0) {
-  //  element.classList.add('hidden');
-  //}
+  removeEmptyElements(newCard);
 
   return newCard;
 };
