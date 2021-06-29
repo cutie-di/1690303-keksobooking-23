@@ -22,9 +22,9 @@ const getCorrectGuestsEnding = (guestsNumber) => {
     return 'не для гостей';
   }
   if (guestsNumber > 1) {
-    return 'гостей';
+    return `для ${guestsNumber} гостей`;
   }
-  return 'гостя';
+  return `для ${guestsNumber} гостя`;
 };
 
 const createFeatures = (features) => {
@@ -51,11 +51,11 @@ const createPhotos = (photos) => {
   return fragment;
 };
 
-const removeEmptyElements = (data) => {
-  const elements = Array.from(data.children);
+const removeEmptyElements = (container) => {
+  const elements = Array.from(container.children);
   elements.forEach((element) => {
-    if (data.length === 0) {
-      element.style.display = 'none';
+    if (!element.innerHTML) {
+      element.remove();
     }
   });
 };
@@ -66,14 +66,16 @@ const createCard = ({
 }) => {
   const newCard = cardTemplate.cloneNode(true);
 
-  newCard.querySelector('.popup__avatar').src = author.avatar;
+  newCard.querySelector('.popup__avatar').src = author.avatar || '';
 
-  newCard.querySelector('.popup__title').textContent = offer.title;
-  newCard.querySelector('.popup__text--address').textContent = offer.address;
-  newCard.querySelector('.popup__text--price').textContent = HOUSING_TYPE[offer.type];
-  newCard.querySelector('.popup__type').textContent = `${offer.price} ₽/ночь`;
-  newCard.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${getCorrectRoomsEnding(offer.rooms)} для ${offer.guests} ${getCorrectGuestsEnding(offer.guests)}`;
-  newCard.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  newCard.querySelector('.popup__title').textContent = offer.title || '';
+  newCard.querySelector('.popup__text--address').textContent = offer.address || '';
+  newCard.querySelector('.popup__text--price').textContent = HOUSING_TYPE[offer.type] || '';
+  newCard.querySelector('.popup__type').textContent = `${offer.price} ₽/ночь` || '';
+
+  newCard.querySelector('.popup__text--capacity').textContent = (!offer.rooms || !Number.isInteger(offer.guests)) ? '' : `${offer.rooms} ${getCorrectRoomsEnding(offer.rooms)} ${getCorrectGuestsEnding(offer.guests)}`;
+
+  newCard.querySelector('.popup__text--time').textContent = (!offer.checkin || !offer.checkout) ? newCard.querySelector('.popup__text--time').remove() : `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featureContainer = newCard.querySelector('.popup__features');
   featureContainer.innerHTML = '';
@@ -85,8 +87,8 @@ const createCard = ({
   const newPhotoElements = createPhotos(offer.photos);
   photoContainer.appendChild(newPhotoElements);
 
+  newCard.querySelector('.popup__description').textContent = offer.description || '';
 
-  newCard.querySelector('.popup__description').textContent = offer.description;
 
   removeEmptyElements(newCard);
 
