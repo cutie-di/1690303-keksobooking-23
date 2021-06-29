@@ -75,7 +75,7 @@ const createCard = ({
 
   newCard.querySelector('.popup__text--capacity').textContent = (!offer.rooms || !Number.isInteger(offer.guests)) ? '' : `${offer.rooms} ${getCorrectRoomsEnding(offer.rooms)} ${getCorrectGuestsEnding(offer.guests)}`;
 
-  newCard.querySelector('.popup__text--time').textContent = (!offer.checkin || !offer.checkout) ? newCard.querySelector('.popup__text--time').remove() : `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  newCard.querySelector('.popup__text--time').textContent = (!offer.checkin || !offer.checkout) ? '' : `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featureContainer = newCard.querySelector('.popup__features');
   featureContainer.innerHTML = '';
