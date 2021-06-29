@@ -1,5 +1,3 @@
-// Вспомогательные функции
-
 const getInteger = (min, max) => {
   if (min > max || min < 0 || max < 0) {
     throw 'Диапазон должен быть положительным, включая ноль';
@@ -19,14 +17,16 @@ const getRandomElement = (arr) => {
   return arr[randomElement];
 };
 
+
+const getRandomSubArray = (array) => array.slice(0, getInteger(1, array.length));
+
 export {
   getInteger,
   getFractionalNumber,
-  getRandomElement
+  getRandomElement,
+  getRandomSubArray
 };
 
 /* eslint-disable no-console */
-//console.log(getInteger(5, 10));
-//console.log(getFractionalNumber(2, 5, 3));
-//console.log(getRandomElement([15, 1, 8, 46, 950, 75, 3]));
+
 /* eslint-enable no-console */
