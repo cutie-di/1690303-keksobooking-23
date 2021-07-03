@@ -33,6 +33,8 @@ const adPriceInput = adForm.querySelector('#price');
 const adRoomsInput = adForm.querySelector('#room_number');
 const adGuestsInput = adForm.querySelector('#capacity');
 
+const submitButton = adForm.querySelector('.ad-form__submit');
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
@@ -76,14 +78,18 @@ const validateGuestNumber = () => {
   const guestsValue = +adGuestsInput.value;
   const availableValues = GUEST_RESTRICTIONS[roomsValue];
 
-  Array.from(adRoomsInput.options).forEach((option) => {
-    option.disabled = !availableValues.inсludes(option.value);
+  Array.from(adGuestsInput.options).forEach((option) => {
+    if (!availableValues.includes(option.value)) {
+      option.disabled = true;
+    } {
+      option.disabled = false;
+    }
   });
 
   if (availableValues.includes(guestsValue)) {
-    guestsValue.setCustomValidity('');
+    adGuestsInput.setCustomValidity('');
   } else {
-    guestsValue.setCustomValidity('Недопустимое количество гостей');
+    adGuestsInput.setCustomValidity('Недопустимое количество гостей');
   }
 
   adGuestsInput.reportValidity();
@@ -96,4 +102,12 @@ const checkValidity = () => {
   adGuestsInput.addEventListener('change', validateGuestNumber);
 };
 
+const formSubmit = (evt) => {
+  if (!adForm.checkValidity()) {
+    evt.preventDefault();
+  }
+};
+
 checkValidity();
+//formSubmit();
+submitButton.addEventListener('submit', formSubmit);
