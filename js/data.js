@@ -31,8 +31,15 @@ const GUESTS = {
 };
 
 const PRICE = {
-  min: 4000,
-  max: 14000,
+  min: 500,
+  //min: {
+  //  'bungalow': 0,
+  //  'flat': 1000,
+  //  'hotel': 3000,
+  //  'house': 5000,
+  //  'palace': 10000,
+  //},
+  max: 1000000,
 };
 
 const HOUSING_TYPE = {

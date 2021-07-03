@@ -36,6 +36,7 @@ const activateForm = () => {
 
 
 export {
+  adForm,
   deactivateForm,
   activateForm
 };
