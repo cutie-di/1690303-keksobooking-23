@@ -7,6 +7,10 @@ import {
   createCard
 } from './card.js';
 
+import {
+  setFormListeners
+} from './form.js';
+
 //import {
 //  deactivateForm,
 //  activateForm
@@ -23,3 +27,5 @@ map.appendChild(createCard(similarAds[0]));
 //deactivateForm();
 //activateForm();
 /* eslint-enable no-console */
+
+setFormListeners();

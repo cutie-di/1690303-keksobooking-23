@@ -31,8 +31,8 @@ const GUESTS = {
 };
 
 const PRICE = {
-  min: 4000,
-  max: 14000,
+  min: 500,
+  max: 1000000,
 };
 
 const HOUSING_TYPE = {

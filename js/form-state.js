@@ -1,4 +1,7 @@
-const adForm = document.querySelector('.ad-form');
+import {
+  adForm
+} from './form.js';
+
 const adFormElements = adForm.querySelectorAll('.ad-form__element');
 const adFormHeader = adForm.querySelector('.ad-form-header');
 

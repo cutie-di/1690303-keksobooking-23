@@ -46,6 +46,8 @@ const createPhotos = (photos) => {
     img.src = photoUrl;
     img.classList.add('popup__photo');
     img.alt = 'Фотография жилья';
+    img.setAttribute('width', '45');
+    img.setAttribute('height', '40');
     fragment.appendChild(img);
   });
   return fragment;
