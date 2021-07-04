@@ -5,6 +5,7 @@ const adRoomsInput = adForm.querySelector('#room_number');
 const adGuestsInput = adForm.querySelector('#capacity');
 
 const submitButton = adForm.querySelector('.ad-form__submit');
+//const resetButton = adForm.querySelector('.ad-form__reset');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -13,12 +14,13 @@ const GUEST_RESTRICTIONS = {
   1: [1],
   2: [1, 2],
   3: [1, 2, 3],
-  100: [],
+  100: [0],
 };
 
-const roomsValue = +adRoomsInput.value;
-const guestsValue = +adGuestsInput.value;
-const availableValues = GUEST_RESTRICTIONS[roomsValue];
+const getAvailableValues = () => {
+  const roomsValue = +adRoomsInput.value;
+  return GUEST_RESTRICTIONS[roomsValue];
+};
 
 const validateTitle = () => {
   const valueLength = adTitleInput.value.length;
@@ -47,16 +49,23 @@ const validatePrice = () => {
 };
 
 const disableOptions = () => {
+  const availableValues = getAvailableValues();
+
   Array.from(adGuestsInput.options).forEach((option) => {
-    if (!availableValues.includes(option.value)) {
+    if (!availableValues.includes(+option.value)) {
       option.disabled = true;
-    } {
+    } else {
       option.disabled = false;
     }
   });
 };
 
+disableOptions();
+
 const validateGuestNumber = () => {
+  const guestsValue = +adGuestsInput.value;
+  const availableValues = getAvailableValues();
+
   if (availableValues.includes(guestsValue)) {
     adGuestsInput.setCustomValidity('');
   } else {
@@ -66,24 +75,13 @@ const validateGuestNumber = () => {
   adGuestsInput.reportValidity();
 };
 
-const formSubmit = (evt) => {
-  if (!adForm.checkValidity()) {
-    evt.preventDefault();
-  }
-};
-
 const setFormListeners = () => {
   adTitleInput.addEventListener('input', validateTitle);
   adPriceInput.addEventListener('input', validatePrice);
   adRoomsInput.addEventListener('change', disableOptions);
-  adGuestsInput.addEventListener('change', disableOptions);
 
   submitButton.addEventListener('click', validateGuestNumber);
-  adForm.addEventListener('submit', formSubmit);
 };
-
-//submitButton.addEventListener('click', () => {
-//});
 
 export {
   adForm,
