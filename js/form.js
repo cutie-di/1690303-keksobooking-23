@@ -14,11 +14,11 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
 const MIN_PRICES = {
-  'bungalow': 0,
-  'flat': 1000,
-  'hotel': 3000,
-  'house': 5000,
-  'palace': 10000,
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
 };
 
 const GUEST_RESTRICTIONS = {
@@ -47,7 +47,7 @@ const validateTitle = () => {
   adTitleInput.reportValidity();
 };
 
-const getPriceInput = () => {
+const setMinPrice = () => {
   const minPrice = MIN_PRICES[adTypeInput.value];
   adPriceInput.min = minPrice;
   adPriceInput.placeholder = minPrice;
@@ -64,7 +64,6 @@ const validatePrice = () => {
 
   adPriceInput.reportValidity();
 };
-
 
 const disableOptions = () => {
   const availableValues = getAvailableValues();
@@ -103,14 +102,14 @@ const changeTimeOut = () => {
 
 
 const setFormListeners = () => {
-  adTitleInput.addEventListener('input', validateTitle);
-  adPriceInput.addEventListener('input', validatePrice);
-  adTypeInput.addEventListener('change', getPriceInput);
-  adRoomsInput.addEventListener('change', disableOptions);
-  timeIn.addEventListener('change', changeTimeIn);
-  timeOut.addEventListener('change', changeTimeOut);
+  adTitleInput.addEventListener('input', () => validateTitle());
+  adPriceInput.addEventListener('input', () => validatePrice());
+  adTypeInput.addEventListener('change', () => setMinPrice());
+  adRoomsInput.addEventListener('change', () => disableOptions());
+  timeIn.addEventListener('change', () => changeTimeIn());
+  timeOut.addEventListener('change', () => changeTimeOut());
 
-  submitButton.addEventListener('click', validateGuestNumber);
+  submitButton.addEventListener('click', () => validateGuestNumber());
 };
 
 
