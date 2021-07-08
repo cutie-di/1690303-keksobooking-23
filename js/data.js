@@ -51,20 +51,20 @@ const avatarURL = () => {
 
 
 const createAd = () => {
-  const LAT_Y = getFractionalNumber(LAT_Y_FIRST, LAT_Y_LAST, 5);
-  const LNG_X = getFractionalNumber(LNG_X_FIRST, LNG_X_LAST, 5);
+  const lat = getFractionalNumber(LAT_Y_FIRST, LAT_Y_LAST, 5);
+  const lng = getFractionalNumber(LNG_X_FIRST, LNG_X_LAST, 5);
 
   return {
     author: {
       avatar: avatarURL(),
     },
     location: {
-      lat: LAT_Y,
-      lng: LNG_X,
+      lat: lat,
+      lng: lng,
     },
     offer: {
       title: getRandomElement(TITLES),
-      address: `${LAT_Y} ${LNG_X},`,
+      address: `${lat} ${lng},`,
       price: getInteger(PRICE.min, PRICE.max),
       type: getRandomElement(TYPE),
       rooms: getInteger(ROOMS.min, ROOMS.max),

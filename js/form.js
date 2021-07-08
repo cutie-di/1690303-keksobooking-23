@@ -2,12 +2,14 @@ const adForm = document.querySelector('.ad-form');
 const adTitleInput = adForm.querySelector('#title');
 const adPriceInput = adForm.querySelector('#price');
 const adTypeInput = adForm.querySelector('#type');
+const addressInput = document.querySelector('#address');
 const adRoomsInput = adForm.querySelector('#room_number');
 const adGuestsInput = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 
 const submitButton = adForm.querySelector('.ad-form__submit');
+const resetButton = document.querySelector('.ad-form__reset');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -26,6 +28,8 @@ const GUEST_RESTRICTIONS = {
   3: [1, 2, 3],
   100: [0],
 };
+
+//const symbolsAfterPoint = 5;
 
 const getAvailableValues = () => {
   const roomsValue = +adRoomsInput.value;
@@ -64,6 +68,10 @@ const validatePrice = () => {
   adPriceInput.reportValidity();
 };
 
+const setAddress = (lat, lng) => {
+  addressInput.value = `${lat}, ${lng}`;
+};
+
 const disableOptions = () => {
   const availableValues = getAvailableValues();
 
@@ -100,6 +108,13 @@ const changeTimeOut = () => {
 };
 
 
+const setResetCallback = (callback) => {
+  resetButton.addEventListener('click', () => {
+    callback();
+  });
+};
+
+
 const setFormListeners = () => {
   adTitleInput.addEventListener('input', () => validateTitle());
   adPriceInput.addEventListener('input', () => validatePrice());
@@ -114,5 +129,7 @@ const setFormListeners = () => {
 
 export {
   adForm,
-  setFormListeners
+  setAddress,
+  setFormListeners,
+  setResetCallback
 };

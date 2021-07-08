@@ -1,12 +1,4 @@
 import {
-  activateForm
-} from './form-state.js';
-
-import {
-  similarAds
-} from './data.js';
-
-import {
   createCard
 } from './card.js';
 
@@ -15,16 +7,9 @@ const DEFAULT_COORDINATES = {
   lng: 139.69171,
 };
 
-const addressInput = document.querySelector('#address');
-const resetButton = document.querySelector('.ad-form__reset');
-
 const symbolsAfterPoint = 5;
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-    activateForm();
-    addressInput.value = `${+(DEFAULT_COORDINATES.lat).toFixed(symbolsAfterPoint)}, ${+(DEFAULT_COORDINATES.lng).toFixed(symbolsAfterPoint)},`;
-  })
   .setView({
     lat: DEFAULT_COORDINATES.lat,
     lng: DEFAULT_COORDINATES.lng,
@@ -35,6 +20,12 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
 ).addTo(map);
+
+const setLoadCallback = (callback) => {
+  map.on('load', () => {
+    callback();
+  });
+};
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -52,10 +43,10 @@ const mainPinMarker = L.marker({
 
 mainPinMarker.addTo(map);
 
-const getAdress = () => {
+const setMoveCallback = (callback) => {
   mainPinMarker.on('moveend', (evt) => {
     const coordinates = evt.target.getLatLng();
-    addressInput.value = `${+(coordinates.lat).toFixed(symbolsAfterPoint)}, ${+(coordinates.lng).toFixed(symbolsAfterPoint)}`;
+    callback(`${+(coordinates.lat).toFixed(symbolsAfterPoint)}, ${+(coordinates.lng).toFixed(symbolsAfterPoint)}`);
   });
 };
 
@@ -87,27 +78,29 @@ const createMarker = (data) => {
     );
 };
 
-similarAds.forEach((point) => {
-  createMarker(point);
-});
-
-const resetForm = () => {
-  resetButton.addEventListener('click', () => {
-    mainPinMarker.setLatLng({
-      lat: DEFAULT_COORDINATES.lat,
-      lng: DEFAULT_COORDINATES.lng,
-    });
-
-    map.setView({
-      lat: DEFAULT_COORDINATES.lat,
-      lng: DEFAULT_COORDINATES.lng,
-    }, 13);
+const addPins = (ads) => {
+  ads.forEach((ad) => {
+    createMarker(ad);
   });
+};
+
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
+  });
+
+  map.setView({
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
+  }, 13);
 };
 
 
 export {
-  createMarker,
-  getAdress,
-  resetForm
+  setLoadCallback,
+  setMoveCallback,
+  //createMarker,
+  addPins,
+  resetMap
 };

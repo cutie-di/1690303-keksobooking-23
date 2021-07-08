@@ -1,27 +1,40 @@
 import {
-  deactivateForm
+  deactivateForm,
+  activateForm
 } from './form-state.js';
 
 import {
-  createMarker,
-  getAdress,
-  resetForm
+  setLoadCallback,
+  setMoveCallback,
+  addPins,
+  resetMap
 } from './map.js';
 
 import {
+  setAddress,
+  setResetCallback,
   setFormListeners
 } from './form.js';
 
+import {
+  similarAds
+} from './data.js';
+
+
 deactivateForm();
 
-createMarker();
+setLoadCallback(() => {
+  addPins(similarAds);
 
-getAdress();
+  activateForm();
+});
+
+
+setMoveCallback((...coords) => setAddress(...coords));
 
 setFormListeners();
 
-resetForm();
-
+setResetCallback(() => resetMap());
 
 /* eslint-disable-next-line no-console */
 //console.log(similarAds);
