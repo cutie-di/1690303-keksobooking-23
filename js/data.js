@@ -15,10 +15,10 @@ const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-const LNG_X_FIRST = 35.65000;
-const LNG_X_LAST = 35.70000;
-const LAT_Y_FIRST = 139.70000;
-const LAT_Y_LAST = 139.80000;
+const LNG_X_FIRST = 139.70000;
+const LNG_X_LAST = 139.80000;
+const LAT_Y_FIRST = 35.65000;
+const LAT_Y_LAST = 35.70000;
 
 const ROOMS = {
   min: 1,
@@ -51,19 +51,20 @@ const avatarURL = () => {
 
 
 const createAd = () => {
-  const LNG_X = getFractionalNumber(LNG_X_FIRST, LNG_X_LAST, 5);
-  const LAT_Y = getFractionalNumber(LAT_Y_FIRST, LAT_Y_LAST, 5);
+  const lat = getFractionalNumber(LAT_Y_FIRST, LAT_Y_LAST, 5);
+  const lng = getFractionalNumber(LNG_X_FIRST, LNG_X_LAST, 5);
+
   return {
     author: {
       avatar: avatarURL(),
     },
     location: {
-      lng: LNG_X,
-      lat: LAT_Y,
+      lat: lat,
+      lng: lng,
     },
     offer: {
       title: getRandomElement(TITLES),
-      address: `${LNG_X}, ${LAT_Y}`,
+      address: `${lat} ${lng},`,
       price: getInteger(PRICE.min, PRICE.max),
       type: getRandomElement(TYPE),
       rooms: getInteger(ROOMS.min, ROOMS.max),
