@@ -29,8 +29,6 @@ const GUEST_RESTRICTIONS = {
   100: [0],
 };
 
-//const symbolsAfterPoint = 5;
-
 const getAvailableValues = () => {
   const roomsValue = +adRoomsInput.value;
   return GUEST_RESTRICTIONS[roomsValue];
@@ -113,7 +111,6 @@ const setResetCallback = (callback) => {
     callback();
   });
 };
-
 
 const setFormListeners = () => {
   adTitleInput.addEventListener('input', () => validateTitle());

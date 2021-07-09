@@ -15,14 +15,14 @@ const map = L.map('map-canvas')
     lng: DEFAULT_COORDINATES.lng,
   }, 13);
 
-L.tileLayer(
+const layer = L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
 ).addTo(map);
 
 const setLoadCallback = (callback) => {
-  map.on('load', () => {
+  layer.on('load', () => {
     callback();
   });
 };
@@ -46,7 +46,7 @@ mainPinMarker.addTo(map);
 const setMoveCallback = (callback) => {
   mainPinMarker.on('moveend', (evt) => {
     const coordinates = evt.target.getLatLng();
-    callback(`${+(coordinates.lat).toFixed(symbolsAfterPoint)}, ${+(coordinates.lng).toFixed(symbolsAfterPoint)}`);
+    callback(`${+(coordinates.lat).toFixed(symbolsAfterPoint)}`, `${+(coordinates.lng).toFixed(symbolsAfterPoint)}`);
   });
 };
 
@@ -100,7 +100,6 @@ const resetMap = () => {
 export {
   setLoadCallback,
   setMoveCallback,
-  //createMarker,
   addPins,
   resetMap
 };

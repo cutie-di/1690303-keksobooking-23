@@ -25,7 +25,6 @@ deactivateForm();
 
 setLoadCallback(() => {
   addPins(similarAds);
-
   activateForm();
 });
 
