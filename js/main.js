@@ -11,29 +11,56 @@ import {
 } from './map.js';
 
 import {
+  adForm,
   setAddress,
   setResetCallback,
   setFormListeners
 } from './form.js';
 
 import {
-  similarAds
-} from './data.js';
+  showSuccessMessage,
+  showErrorMessage,
+  showErrorLoadingMessage
+  //closeSuccessMessage,
+  //closeErrorMessage
+} from './popup.js';
 
+import {
+  loadSimilarAd,
+  postAd
+} from './server.js';
 
 deactivateForm();
 
 setLoadCallback(() => {
-  addPins(similarAds);
+  loadSimilarAd((data) => {
+    addPins(data);
+  });
   activateForm();
 });
 
 
 setMoveCallback((...coords) => setAddress(...coords));
 
-setFormListeners();
+adForm.addEventListener('submit', (evt) => {
+  setFormListeners();
+  evt.preventDefault();
+  postAd(
+    showSuccessMessage,
+    showErrorMessage,
+    new FormData(evt.target),
+  );
+});
+
 
 setResetCallback(() => resetMap());
+
+
+//showSuccessMessage();
+//showErrorMessage();
+//closeSuccessMessage();
+//closeErrorMessage();
+
 
 /* eslint-disable-next-line no-console */
 //console.log(similarAds);

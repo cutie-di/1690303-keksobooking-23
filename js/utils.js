@@ -17,14 +17,16 @@ const getRandomElement = (arr) => {
   return arr[randomElement];
 };
 
-
 const getRandomSubArray = (array) => array.slice(0, getInteger(1, array.length));
+
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 export {
   getInteger,
   getFractionalNumber,
   getRandomElement,
-  getRandomSubArray
+  getRandomSubArray,
+  isEscEvent
 };
 
 /* eslint-disable no-console */
