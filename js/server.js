@@ -1,36 +1,35 @@
-const fetchLink = 'https://23.javascript.pages.academy/keksobooking/data';
+const fetchLink = 'https://23.javascript.pages.academy/keksobooking/';
 
-const loadSimilarAd = (onSuccess, onFail) => {
+const loadSimilarAd = (onSuccess, onError) => {
 
-  fetch(`${fetchLink}`, {
-      method: 'GET',
-      credentials: 'same-origin',
-    })
+  fetch(`${fetchLink}data`, {
+    method: 'GET',
+    credentials: 'same-origin',
+  })
     .then((response) => response.json())
-    .then((data) => {
-      onSuccess(data);
-    })
-    .catch(() => {
-      onFail();
-    });
+    .then((data) => onSuccess(data))
+    .catch(() => onError());
 };
 
-const postAd = (onSuccess, onFail, data) => {
-  const formData = new FormData(data);
 
-  fetch(`${fetchLink}`, {
+const formSubmit = (form, onSuccess, onError) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(evt.target);
+
+    fetch(fetchLink, {
       method: 'POST',
       body: formData,
     })
-    .then((response) => {
-      response.ok ? onSuccess() : onFail();
-    })
-    .catch(() => {
-      onFail();
-    });
+      .then((response) => {
+        response.ok ? onSuccess() : onError();
+      })
+      .catch(() => onError());
+  });
 };
 
 export {
   loadSimilarAd,
-  postAd
+  formSubmit
 };

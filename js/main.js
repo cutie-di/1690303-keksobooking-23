@@ -20,47 +20,49 @@ import {
 import {
   showSuccessMessage,
   showErrorMessage,
-  showErrorLoadingMessage
-  //closeSuccessMessage,
-  //closeErrorMessage
+  showErrorLoadMessage,
+  closeMessage
 } from './popup.js';
 
 import {
   loadSimilarAd,
-  postAd
+  formSubmit
 } from './server.js';
+
+import {
+  filterAds
+} from './filter.js';
 
 deactivateForm();
 
 setLoadCallback(() => {
-  loadSimilarAd((data) => {
-    addPins(data);
-  });
+  loadSimilarAd(
+    (data) => {
+      addPins(filterAds(data));
+    },
+    () => {
+      showErrorLoadMessage();
+    },
+  );
   activateForm();
 });
 
-
-setMoveCallback((...coords) => setAddress(...coords));
-
-adForm.addEventListener('submit', (evt) => {
-  setFormListeners();
-  evt.preventDefault();
-  postAd(
-    showSuccessMessage,
-    showErrorMessage,
-    new FormData(evt.target),
-  );
-});
-
+const onSuccess = () => {
+  showSuccessMessage();
+  adForm.reset();
+};
 
 setResetCallback(() => resetMap());
 
 
-//showSuccessMessage();
-//showErrorMessage();
-//closeSuccessMessage();
-//closeErrorMessage();
+const sendForm = () => {
+  setMoveCallback((...coords) => setAddress(...coords));
+  setFormListeners();
+  formSubmit(adForm, onSuccess, showErrorMessage);
+  closeMessage();
+};
 
+sendForm();
 
 /* eslint-disable-next-line no-console */
 //console.log(similarAds);

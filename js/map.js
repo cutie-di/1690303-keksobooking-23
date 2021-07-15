@@ -3,8 +3,8 @@ import {
 } from './card.js';
 
 const DEFAULT_COORDINATES = {
-  lat: 35.6895,
-  lng: 139.69171,
+  lat: 35.67173,
+  lng: 139.7318,
 };
 
 const symbolsAfterPoint = 5;

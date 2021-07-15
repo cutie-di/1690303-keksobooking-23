@@ -4,12 +4,12 @@ import {
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-const loadingErrorTemplate = document.querySelector('#server-error').content.querySelector('.server-error');
+const loadErrorTemplate = document.querySelector('#server-error').content.querySelector('.server-error');
 const errorButton = errorTemplate.querySelector('.error__button');
 
 const successPopup = successTemplate.cloneNode(true);
 const errorPopup = errorTemplate.cloneNode(true);
-const loadingErrorPopup = loadingErrorTemplate.cloneNode(true);
+const loadErrorPopup = loadErrorTemplate.cloneNode(true);
 
 const openPopup = (popup) => {
   document.body.append(popup);
@@ -40,14 +40,11 @@ const closeErrorOnButton = (popup) => {
 
 const showSuccessMessage = () => openPopup(successPopup);
 const showErrorMessage = () => openPopup(errorPopup);
-const showErrorLoadingMessage = () => openPopup(loadingErrorPopup);
+const showErrorLoadMessage = () => openPopup(loadErrorPopup);
 
-const closeSuccessMessage = () => {
+const closeMessage = () => {
   closeOnClick(successPopup);
   closeOnEsc(successPopup);
-};
-
-const closeErrorMessage = () => {
   closeOnClick(errorPopup);
   closeOnEsc(errorPopup);
   closeErrorOnButton(errorPopup);
@@ -56,7 +53,6 @@ const closeErrorMessage = () => {
 export {
   showSuccessMessage,
   showErrorMessage,
-  showErrorLoadingMessage,
-  closeSuccessMessage,
-  closeErrorMessage
+  showErrorLoadMessage,
+  closeMessage
 };
