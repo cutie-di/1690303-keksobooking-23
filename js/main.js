@@ -20,8 +20,7 @@ import {
 import {
   showSuccessMessage,
   showErrorMessage,
-  showErrorLoadMessage,
-  closeMessage
+  showErrorLoadMessage
 } from './popup.js';
 
 import {
@@ -59,7 +58,6 @@ const sendForm = () => {
   setMoveCallback((...coords) => setAddress(...coords));
   setFormListeners();
   formSubmit(adForm, onSuccess, showErrorMessage);
-  closeMessage();
 };
 
 sendForm();

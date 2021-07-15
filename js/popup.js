@@ -5,54 +5,45 @@ import {
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const loadErrorTemplate = document.querySelector('#server-error').content.querySelector('.server-error');
-const errorButton = errorTemplate.querySelector('.error__button');
 
-const successPopup = successTemplate.cloneNode(true);
-const errorPopup = errorTemplate.cloneNode(true);
-const loadErrorPopup = loadErrorTemplate.cloneNode(true);
+let popup = null;
 
-const openPopup = (popup) => {
-  document.body.append(popup);
-};
-
-const closePopup = (popup) => {
+const closePopup = () => {
   popup.remove();
+  document.removeEventListener('click', closePopup);
 };
 
-const closeOnClick = (evt) => {
-  evt.addEventListener('click', () => {
-    closePopup(evt);
-  });
-};
-
-const closeOnEsc = (evt, popup) => {
+const closeOnEsc = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    closePopup(popup);
+    closePopup();
+    document.removeEventListener('keydown', closeOnEsc);
   }
 };
 
-const closeErrorOnButton = (popup) => {
-  errorButton.addEventListener('click', () => {
+const closeErrorOnButton = () => {
+  popup.querySelector('.error__button').addEventListener('click', () => {
     closePopup(popup);
+    document.removeEventListener('keydown', closeOnEsc);
   });
 };
 
-const showSuccessMessage = () => openPopup(successPopup);
-const showErrorMessage = () => openPopup(errorPopup);
-const showErrorLoadMessage = () => openPopup(loadErrorPopup);
-
-const closeMessage = () => {
-  closeOnClick(successPopup);
-  closeOnEsc(successPopup);
-  closeOnClick(errorPopup);
-  closeOnEsc(errorPopup);
-  closeErrorOnButton(errorPopup);
+const openPopup = (template) => {
+  popup = template.cloneNode(true);
+  if (template === errorTemplate) {
+    closeErrorOnButton();
+  }
+  document.addEventListener('click', closePopup);
+  document.addEventListener('keydown', closeOnEsc);
+  document.body.append(popup);
 };
+
+const showSuccessMessage = () => openPopup(successTemplate);
+const showErrorMessage = () => openPopup(errorTemplate);
+const showErrorLoadMessage = () => openPopup(loadErrorTemplate);
 
 export {
   showSuccessMessage,
   showErrorMessage,
-  showErrorLoadMessage,
-  closeMessage
+  showErrorLoadMessage
 };
