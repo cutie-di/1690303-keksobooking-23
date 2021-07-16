@@ -12,24 +12,19 @@ const loadSimilarAd = (onSuccess, onError) => {
 };
 
 
-const formSubmit = (form, onSuccess, onError) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    const formData = new FormData(evt.target);
-
-    fetch(fetchLink, {
-      method: 'POST',
-      body: formData,
+const sendForm = (formData, onSuccess, onError) => {
+  fetch(fetchLink, {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => {
+      response.ok ? onSuccess() : onError();
     })
-      .then((response) => {
-        response.ok ? onSuccess() : onError();
-      })
-      .catch(() => onError());
-  });
+    .catch(() => onError());
 };
+
 
 export {
   loadSimilarAd,
-  formSubmit
+  sendForm
 };

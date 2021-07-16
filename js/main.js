@@ -14,7 +14,8 @@ import {
   adForm,
   setAddress,
   setResetCallback,
-  setFormListeners
+  setFormListeners,
+  setSubmitCallback
 } from './form.js';
 
 import {
@@ -25,7 +26,7 @@ import {
 
 import {
   loadSimilarAd,
-  formSubmit
+  sendForm
 } from './server.js';
 
 import {
@@ -52,18 +53,7 @@ const onSuccess = () => {
 };
 
 setResetCallback(() => resetMap());
+setMoveCallback((...coords) => setAddress(...coords));
+setFormListeners();
 
-
-const sendForm = () => {
-  setMoveCallback((...coords) => setAddress(...coords));
-  setFormListeners();
-  formSubmit(adForm, onSuccess, showErrorMessage);
-};
-
-sendForm();
-
-/* eslint-disable-next-line no-console */
-//console.log(similarAds);
-
-//const map = document.querySelector('#map-canvas');
-//map.appendChild(createCard(similarAds[0]));
+setSubmitCallback(() => sendForm(new FormData(adForm), onSuccess, showErrorMessage));
