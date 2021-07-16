@@ -11,32 +11,49 @@ import {
 } from './map.js';
 
 import {
+  adForm,
   setAddress,
   setResetCallback,
-  setFormListeners
+  setFormListeners,
+  setSubmitCallback
 } from './form.js';
 
 import {
-  similarAds
-} from './data.js';
+  showSuccessMessage,
+  showErrorMessage,
+  showErrorLoadMessage
+} from './popup.js';
 
+import {
+  loadSimilarAd,
+  sendForm
+} from './server.js';
+
+import {
+  filterAds
+} from './filter.js';
 
 deactivateForm();
 
 setLoadCallback(() => {
-  addPins(similarAds);
+  loadSimilarAd(
+    (data) => {
+      addPins(filterAds(data));
+    },
+    () => {
+      showErrorLoadMessage();
+    },
+  );
   activateForm();
 });
 
-
-setMoveCallback((...coords) => setAddress(...coords));
-
-setFormListeners();
+const onSuccess = () => {
+  showSuccessMessage();
+  adForm.reset();
+};
 
 setResetCallback(() => resetMap());
+setMoveCallback((...coords) => setAddress(...coords));
+setFormListeners();
 
-/* eslint-disable-next-line no-console */
-//console.log(similarAds);
-
-//const map = document.querySelector('#map-canvas');
-//map.appendChild(createCard(similarAds[0]));
+setSubmitCallback(() => sendForm(new FormData(adForm), onSuccess, showErrorMessage));

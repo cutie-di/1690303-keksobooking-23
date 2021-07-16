@@ -81,13 +81,18 @@ const createCard = ({
 
   const featureContainer = newCard.querySelector('.popup__features');
   featureContainer.innerHTML = '';
-  const newFeatureElements = createFeatures(offer.features);
-  featureContainer.appendChild(newFeatureElements);
+  if (offer.features) {
+    const newFeatureElements = createFeatures(offer.features);
+    featureContainer.appendChild(newFeatureElements);
+  }
 
   const photoContainer = newCard.querySelector('.popup__photos');
   photoContainer.innerHTML = '';
-  const newPhotoElements = createPhotos(offer.photos);
-  photoContainer.appendChild(newPhotoElements);
+  if (offer.photos) {
+    const newPhotoElements = createPhotos(offer.photos);
+    photoContainer.appendChild(newPhotoElements);
+  }
+
 
   newCard.querySelector('.popup__description').textContent = offer.description || '';
 

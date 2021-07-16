@@ -123,10 +123,17 @@ const setFormListeners = () => {
   submitButton.addEventListener('click', () => validateGuestNumber());
 };
 
+const setSubmitCallback = (callback) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    callback();
+  });
+};
 
 export {
   adForm,
   setAddress,
   setFormListeners,
-  setResetCallback
+  setResetCallback,
+  setSubmitCallback
 };
