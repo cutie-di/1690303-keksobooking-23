@@ -30,22 +30,34 @@ import {
 } from './server.js';
 
 import {
-  filterAds
+  filterAdsNumber,
+  getSimilarAds,
+  setFilterChange
 } from './filter.js';
+
+import {
+  debounce
+} from './utils/debounce.js';
+
+const DELAY = 500;
 
 deactivateForm();
 
 setLoadCallback(() => {
-  loadSimilarAd(
-    (data) => {
-      addPins(filterAds(data));
-    },
-    () => {
-      showErrorLoadMessage();
-    },
+
+  loadSimilarAd((data) => {
+    addPins(filterAdsNumber(data));
+    setFilterChange(debounce(() => getSimilarAds(data),
+      DELAY,
+    ));
+    activateForm();
+  },
+  () => {
+    showErrorLoadMessage();
+  },
   );
-  activateForm();
 });
+
 
 const onSuccess = () => {
   showSuccessMessage();

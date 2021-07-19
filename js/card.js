@@ -1,8 +1,11 @@
-import {
-  HOUSING_TYPE
-} from './data.js';
-
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+const HOUSING_TYPE = {
+  'flat': 'Квартира',
+  'palace': 'Дворец',
+  'bungalo': 'Бунгало',
+  'house': 'Дом',
+  'hotel': 'Отель',
+};
 
 const getCorrectRoomsEnding = (roomNumber) => {
   switch (roomNumber) {
@@ -93,9 +96,7 @@ const createCard = ({
     photoContainer.appendChild(newPhotoElements);
   }
 
-
   newCard.querySelector('.popup__description').textContent = offer.description || '';
-
 
   removeEmptyElements(newCard);
 

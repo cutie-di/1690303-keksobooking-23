@@ -78,6 +78,7 @@ const createMarker = (data) => {
     );
 };
 
+
 const addPins = (ads) => {
   ads.forEach((ad) => {
     createMarker(ad);
