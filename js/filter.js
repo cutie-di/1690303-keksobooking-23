@@ -17,11 +17,11 @@ const checkFilterPrice = (ad) => {
 
   switch (filterPrice.value) {
     case 'low':
-      return (price < 1000);
-    case 'high':
-      return (price > 5000);
+      return (price < 10000);
     case 'middle':
-      return (price <= 1000) && (price >= 5000);
+      return (price >= 10000) && (price <= 50000);
+    case 'high':
+      return (price > 50000);
     default:
       return DEFAULT;
   }
@@ -47,9 +47,9 @@ const checkFilterFeatures = (ad) => {
   }
 };
 
-const getSimilarAds = (adverts) => adverts.filter((ad) => checkFilterType(ad) && checkFilterPrice(ad) && checkFilterRooms(ad) && checkFilterGusts(ad) && checkFilterFeatures(ad));
+const getFiltredAds = (adverts) => adverts.filter((ad) => checkFilterType(ad) && checkFilterPrice(ad) && checkFilterRooms(ad) && checkFilterGusts(ad) && checkFilterFeatures(ad)).slice(0, MAX_ADS);
 
-const setFilterChange = (callback) => {
+const setFilterChangeCallback = (callback) => {
   filterForm.addEventListener('change', () => {
     callback();
   });
@@ -57,6 +57,6 @@ const setFilterChange = (callback) => {
 
 export {
   filterAdsNumber,
-  getSimilarAds,
-  setFilterChange
+  getFiltredAds,
+  setFilterChangeCallback
 };

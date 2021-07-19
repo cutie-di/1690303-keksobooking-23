@@ -2,6 +2,17 @@ import {
   createCard
 } from './card.js';
 
+//import {
+//  getSimilarAds,
+//  setFilterChangeCallback
+//} from './filter.js';
+
+//import {
+//  debounce
+//} from './utils/debounce.js';
+
+//const DELAY = 500;
+
 const DEFAULT_COORDINATES = {
   lat: 35.67173,
   lng: 139.7318,
@@ -78,7 +89,6 @@ const createMarker = (data) => {
     );
 };
 
-
 const addPins = (ads) => {
   ads.forEach((ad) => {
     createMarker(ad);
@@ -97,10 +107,13 @@ const resetMap = () => {
   }, 13);
 };
 
+const clearPins = () => pinsGroup.clearLayers();
+
 
 export {
   setLoadCallback,
   setMoveCallback,
   addPins,
-  resetMap
+  resetMap,
+  clearPins
 };

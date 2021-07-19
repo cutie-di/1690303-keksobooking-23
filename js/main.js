@@ -7,7 +7,8 @@ import {
   setLoadCallback,
   setMoveCallback,
   addPins,
-  resetMap
+  resetMap,
+  clearPins
 } from './map.js';
 
 import {
@@ -31,15 +32,13 @@ import {
 
 import {
   filterAdsNumber,
-  getSimilarAds,
-  setFilterChange
+  getFiltredAds,
+  setFilterChangeCallback
 } from './filter.js';
 
 import {
   debounce
-} from './utils/debounce.js';
-
-const DELAY = 500;
+} from './utils.js';
 
 deactivateForm();
 
@@ -47,9 +46,13 @@ setLoadCallback(() => {
 
   loadSimilarAd((data) => {
     addPins(filterAdsNumber(data));
-    setFilterChange(debounce(() => getSimilarAds(data),
-      DELAY,
-    ));
+
+    const delay = debounce(() => {
+      clearPins();
+      addPins(getFiltredAds(data));
+    });
+    setFilterChangeCallback(delay);
+
     activateForm();
   },
   () => {
