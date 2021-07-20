@@ -42,6 +42,3 @@ export {
   deactivateForm,
   activateForm
 };
-
-//deactivateForm();
-//activateForm();

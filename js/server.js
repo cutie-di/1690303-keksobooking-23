@@ -11,7 +11,6 @@ const loadSimilarAd = (onSuccess, onError) => {
     .catch(() => onError());
 };
 
-
 const sendForm = (formData, onSuccess, onError) => {
   fetch(fetchLink, {
     method: 'POST',
@@ -22,7 +21,6 @@ const sendForm = (formData, onSuccess, onError) => {
     })
     .catch(() => onError());
 };
-
 
 export {
   loadSimilarAd,

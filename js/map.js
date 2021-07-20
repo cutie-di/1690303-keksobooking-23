@@ -9,20 +9,20 @@ const DEFAULT_COORDINATES = {
 
 const symbolsAfterPoint = 5;
 
-const map = L.map('map-canvas')
+const map =
+L.map('map-canvas')
   .setView({
     lat: DEFAULT_COORDINATES.lat,
     lng: DEFAULT_COORDINATES.lng,
   }, 13);
-
-const layer = L.tileLayer(
+L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
 ).addTo(map);
 
 const setLoadCallback = (callback) => {
-  layer.on('load', () => {
+  map.whenReady(() => {
     callback();
   });
 };
@@ -96,10 +96,13 @@ const resetMap = () => {
   }, 13);
 };
 
+const clearPins = () => pinsGroup.clearLayers();
+
 
 export {
   setLoadCallback,
   setMoveCallback,
   addPins,
-  resetMap
+  resetMap,
+  clearPins
 };

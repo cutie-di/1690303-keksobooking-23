@@ -7,7 +7,6 @@ const adRoomsInput = adForm.querySelector('#room_number');
 const adGuestsInput = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-
 const submitButton = adForm.querySelector('.ad-form__submit');
 const resetButton = document.querySelector('.ad-form__reset');
 
@@ -29,6 +28,8 @@ const GUEST_RESTRICTIONS = {
   100: [0],
 };
 
+const setRedBorder = (element, value) => (value) ? element.classList.add('validation-error-border') : element.classList.remove('validation-error-border');
+
 const getAvailableValues = () => {
   const roomsValue = +adRoomsInput.value;
   return GUEST_RESTRICTIONS[roomsValue];
@@ -38,11 +39,14 @@ const validateTitle = () => {
   const valueLength = adTitleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
+    setRedBorder(adTitleInput, true);
     adTitleInput.setCustomValidity(`Введите ещё ${  MIN_TITLE_LENGTH - valueLength } симв.`);
   } else if (valueLength > MAX_TITLE_LENGTH) {
+    setRedBorder(adTitleInput, true);
     adTitleInput.setCustomValidity(`Удалите лишние ${  valueLength - MAX_TITLE_LENGTH } симв.`);
   } else {
     adTitleInput.setCustomValidity('');
+    setRedBorder(adTitleInput, false);
   }
 
   adTitleInput.reportValidity();
@@ -58,9 +62,11 @@ const validatePrice = () => {
   const minPrice = MIN_PRICES[adTypeInput.value];
   const maxPrice = adPriceInput.max;
   if (+adPriceInput.value < minPrice || +adPriceInput.value > maxPrice) {
+    setRedBorder(adPriceInput, true);
     adPriceInput.setCustomValidity(`Укажите цену от ${minPrice} до ${maxPrice}`);
   } else {
     adPriceInput.setCustomValidity('');
+    setRedBorder(adPriceInput, false);
   }
 
   adPriceInput.reportValidity();
@@ -104,7 +110,6 @@ const changeTimeIn = () => {
 const changeTimeOut = () => {
   timeIn.value = timeOut.value;
 };
-
 
 const setResetCallback = (callback) => {
   resetButton.addEventListener('click', () => {

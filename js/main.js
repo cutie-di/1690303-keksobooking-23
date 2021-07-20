@@ -7,7 +7,8 @@ import {
   setLoadCallback,
   setMoveCallback,
   addPins,
-  resetMap
+  resetMap,
+  clearPins
 } from './map.js';
 
 import {
@@ -30,21 +31,34 @@ import {
 } from './server.js';
 
 import {
-  filterAds
+  filterAdsNumber,
+  getFiltredAds,
+  setFilterChangeCallback
 } from './filter.js';
+
+import {
+  debounce
+} from './utils.js';
 
 deactivateForm();
 
 setLoadCallback(() => {
-  loadSimilarAd(
-    (data) => {
-      addPins(filterAds(data));
-    },
-    () => {
-      showErrorLoadMessage();
-    },
+
+  loadSimilarAd((data) => {
+    addPins(filterAdsNumber(data));
+
+    const delay = debounce(() => {
+      clearPins();
+      addPins(getFiltredAds(data));
+    });
+    setFilterChangeCallback(delay);
+
+    activateForm();
+  },
+  () => {
+    showErrorLoadMessage();
+  },
   );
-  activateForm();
 });
 
 const onSuccess = () => {

@@ -1,3 +1,13 @@
+const DELAY = 500;
+
+const debounce = (callback, timeoutDelay = DELAY) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 const getInteger = (min, max) => {
   if (min > max || min < 0 || max < 0) {
     throw 'Диапазон должен быть положительным, включая ноль';
@@ -22,13 +32,10 @@ const getRandomSubArray = (array) => array.slice(0, getInteger(1, array.length))
 const isEscEvent = (evt) => evt.keyCode === 27 || evt.key === 'Escape' || evt.key === 'Esc';
 
 export {
+  debounce,
   getInteger,
   getFractionalNumber,
   getRandomElement,
   getRandomSubArray,
   isEscEvent
 };
-
-/* eslint-disable no-console */
-
-/* eslint-enable no-console */
