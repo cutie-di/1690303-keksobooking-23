@@ -31,7 +31,6 @@ const getRandomSubArray = (array) => array.slice(0, getInteger(1, array.length))
 
 const isEscEvent = (evt) => evt.keyCode === 27 || evt.key === 'Escape' || evt.key === 'Esc';
 
-
 export {
   debounce,
   getInteger,

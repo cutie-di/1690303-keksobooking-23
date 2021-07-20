@@ -4,16 +4,15 @@ const filterPrice = filterForm.querySelector('#housing-price');
 const filterRooms = filterForm.querySelector('#housing-rooms');
 const filterGuests = filterForm.querySelector('#housing-guests');
 const DEFAULT = 'any';
-
 const MAX_ADS = 10;
 
 const filterAdsNumber = (adsArray) => adsArray.slice(0, MAX_ADS);
 
-const checkFilterType = (ad) => ad.offer.type === filterType.value ||
+const checkFilterType = (ad) => ad === filterType.value ||
 filterType.value === DEFAULT;
 
 const checkFilterPrice = (ad) => {
-  const price = ad.offer.price;
+  const price = ad;
 
   switch (filterPrice.value) {
     case 'low':
@@ -27,27 +26,22 @@ const checkFilterPrice = (ad) => {
   }
 };
 
-const checkFilterRooms = (ad) => ad.offer.rooms === +filterRooms.value ||
+const checkFilterRooms = (ad) => ad === +filterRooms.value ||
 filterRooms.value === DEFAULT;
 
-const checkFilterGusts = (ad) => ad.offer.guests === +filterGuests.value ||
-filterGuests.value === DEFAULT;
+const checkFilterGusts = (ad) => ad === +filterGuests.value || filterGuests.value === DEFAULT;
 
-const selectedFeatures = [...filterForm.querySelectorAll('[name="features"]')]
-  .filter((featureElement) => featureElement.selected)
-  .map((featureElement) => featureElement.value);
 
-const checkFilterFeatures = (ad) => {
-  if (!selectedFeatures.length) {
-    return true;
-  }
+const checkFilterFeatures = (ad = []) => {
+  const selectedFeatures = [...filterForm.querySelectorAll('[name="features"]')]
+    .filter((featureElement) => featureElement.checked)
+    .map((featureElement) => featureElement.value);
 
-  if (selectedFeatures.every((feature) => ad.offer.features.includes(feature))) {
-    return true;
-  }
+  return !selectedFeatures.length || selectedFeatures.every((feature) => ad.includes(feature));
 };
 
-const getFiltredAds = (adverts) => adverts.filter((ad) => checkFilterType(ad) && checkFilterPrice(ad) && checkFilterRooms(ad) && checkFilterGusts(ad) && checkFilterFeatures(ad)).slice(0, MAX_ADS);
+
+const getFiltredAds = (adverts) => adverts.filter((ad) => checkFilterType(ad.offer.type) && checkFilterPrice(ad.offer.price) && checkFilterRooms(ad.offer.rooms) && checkFilterGusts(ad.offer.guests) && checkFilterFeatures(ad.offer.features)).slice(0, MAX_ADS);
 
 const setFilterChangeCallback = (callback) => {
   filterForm.addEventListener('change', () => {

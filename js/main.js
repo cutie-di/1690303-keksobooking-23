@@ -61,7 +61,6 @@ setLoadCallback(() => {
   );
 });
 
-
 const onSuccess = () => {
   showSuccessMessage();
   adForm.reset();

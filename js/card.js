@@ -72,14 +72,11 @@ const createCard = ({
   const newCard = cardTemplate.cloneNode(true);
 
   newCard.querySelector('.popup__avatar').src = author.avatar || '';
-
   newCard.querySelector('.popup__title').textContent = offer.title || '';
   newCard.querySelector('.popup__text--address').textContent = offer.address || '';
   newCard.querySelector('.popup__text--price').textContent = HOUSING_TYPE[offer.type] || '';
   newCard.querySelector('.popup__type').textContent = `${offer.price} ₽/ночь` || '';
-
   newCard.querySelector('.popup__text--capacity').textContent = (!offer.rooms || !Number.isInteger(offer.guests)) ? '' : `${offer.rooms} ${getCorrectRoomsEnding(offer.rooms)} ${getCorrectGuestsEnding(offer.guests)}`;
-
   newCard.querySelector('.popup__text--time').textContent = (!offer.checkin || !offer.checkout) ? '' : `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featureContainer = newCard.querySelector('.popup__features');

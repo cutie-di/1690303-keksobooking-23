@@ -7,7 +7,6 @@ const adRoomsInput = adForm.querySelector('#room_number');
 const adGuestsInput = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-
 const submitButton = adForm.querySelector('.ad-form__submit');
 const resetButton = document.querySelector('.ad-form__reset');
 
@@ -111,7 +110,6 @@ const changeTimeIn = () => {
 const changeTimeOut = () => {
   timeIn.value = timeOut.value;
 };
-
 
 const setResetCallback = (callback) => {
   resetButton.addEventListener('click', () => {
