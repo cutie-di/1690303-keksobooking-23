@@ -1,6 +1,6 @@
 const fetchLink = 'https://23.javascript.pages.academy/keksobooking/';
 
-const loadSimilarAd = (onSuccess, onError) => {
+const loadSimilarAds = (onSuccess, onError) => {
 
   fetch(`${fetchLink}data`, {
     method: 'GET',
@@ -23,6 +23,6 @@ const sendForm = (formData, onSuccess, onError) => {
 };
 
 export {
-  loadSimilarAd,
+  loadSimilarAds,
   sendForm
 };

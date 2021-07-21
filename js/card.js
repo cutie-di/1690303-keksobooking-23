@@ -2,7 +2,7 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 const HOUSING_TYPE = {
   'flat': 'Квартира',
   'palace': 'Дворец',
-  'bungalo': 'Бунгало',
+  'bungalow': 'Бунгало',
   'house': 'Дом',
   'hotel': 'Отель',
 };
@@ -99,7 +99,6 @@ const createCard = ({
 
   return newCard;
 };
-
 
 export {
   createCard

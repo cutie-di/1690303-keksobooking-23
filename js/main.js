@@ -1,9 +1,11 @@
 import {
   deactivateForm,
-  activateForm
+  activateForm,
+  resetAdForm
 } from './form-state.js';
 
 import {
+  DEFAULT_COORDINATES,
   setLoadCallback,
   setMoveCallback,
   addPins,
@@ -26,13 +28,14 @@ import {
 } from './popup.js';
 
 import {
-  loadSimilarAd,
+  loadSimilarAds,
   sendForm
 } from './server.js';
 
 import {
+  resetFilterForm,
   filterAdsNumber,
-  getFiltredAds,
+  getFilteredAds,
   setFilterChangeCallback
 } from './filter.js';
 
@@ -43,13 +46,14 @@ import {
 deactivateForm();
 
 setLoadCallback(() => {
+  setAddress(DEFAULT_COORDINATES.lat, DEFAULT_COORDINATES.lng);
 
-  loadSimilarAd((data) => {
+  loadSimilarAds((data) => {
     addPins(filterAdsNumber(data));
 
     const delay = debounce(() => {
       clearPins();
-      addPins(getFiltredAds(data));
+      addPins(getFilteredAds(data));
     });
     setFilterChangeCallback(delay);
 
@@ -61,12 +65,28 @@ setLoadCallback(() => {
   );
 });
 
-const onSuccess = () => {
-  showSuccessMessage();
-  adForm.reset();
+const resetPage = () => {
+  resetMap();
+  resetFilterForm();
+  resetAdForm();
+
+  setTimeout(() => {
+    setAddress(DEFAULT_COORDINATES.lat, DEFAULT_COORDINATES.lng);
+    clearPins();
+    loadSimilarAds((data) => addPins(filterAdsNumber(data)));
+  },
+  );
 };
 
-setResetCallback(() => resetMap());
+const onSuccess = () => {
+  showSuccessMessage();
+  resetPage();
+};
+
+setResetCallback(() => {
+  resetPage();
+});
+
 setMoveCallback((...coords) => setAddress(...coords));
 setFormListeners();
 
