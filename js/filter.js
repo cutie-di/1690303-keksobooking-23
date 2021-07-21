@@ -48,9 +48,13 @@ const setFilterChangeCallback = (callback) => {
   });
 };
 
+const resetFilterForm = () => {
+  filterForm.reset();
+};
+
 export {
-  filterForm,
   filterAdsNumber,
   getFilteredAds,
-  setFilterChangeCallback
+  setFilterChangeCallback,
+  resetFilterForm
 };

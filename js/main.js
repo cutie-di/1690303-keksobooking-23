@@ -1,7 +1,7 @@
 import {
   deactivateForm,
   activateForm,
-  resetForm
+  resetAdForm
 } from './form-state.js';
 
 import {
@@ -33,7 +33,7 @@ import {
 } from './server.js';
 
 import {
-  filterForm,
+  resetFilterForm,
   filterAdsNumber,
   getFilteredAds,
   setFilterChangeCallback
@@ -66,10 +66,16 @@ setLoadCallback(() => {
 });
 
 const resetPage = () => {
-  resetForm(adForm, filterForm);
   resetMap();
-  setAddress(DEFAULT_COORDINATES.lat, DEFAULT_COORDINATES.lng);
-  loadSimilarAds((data) => addPins(filterAdsNumber(data)));
+  resetFilterForm();
+  resetAdForm();
+
+  setTimeout(() => {
+    setAddress(DEFAULT_COORDINATES.lat, DEFAULT_COORDINATES.lng);
+    clearPins();
+    loadSimilarAds((data) => addPins(filterAdsNumber(data)));
+  },
+  );
 };
 
 const onSuccess = () => {

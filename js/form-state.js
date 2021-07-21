@@ -36,13 +36,12 @@ const activateForm = () => {
   mapFeatures.disabled = false;
 };
 
-const resetForm = (form, filter) => {
-  form.reset();
-  filter.reset();
+const resetAdForm = () => {
+  adForm.reset();
 };
 
 export {
   deactivateForm,
   activateForm,
-  resetForm
+  resetAdForm
 };
