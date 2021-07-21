@@ -28,7 +28,22 @@ const GUEST_RESTRICTIONS = {
   100: [0],
 };
 
-const setRedBorder = (element, value) => (value) ? element.classList.add('validation-error-border') : element.classList.remove('validation-error-border');
+const unmarkValidInputs = () => {
+  const controls = adForm.querySelectorAll('.validation-error-border');
+  [...controls].forEach((control) => {
+    if (control.validity.valid) {
+      control.classList.remove('validation-error-border');
+    }
+  });
+};
+
+const markValidInputs = () => {
+  const controls = adForm.querySelectorAll('input:invalid, select:invalid');
+  [...controls].forEach((control) => {
+    control.classList.add('validation-error-border');
+  },
+  );
+};
 
 const getAvailableValues = () => {
   const roomsValue = +adRoomsInput.value;
@@ -39,17 +54,12 @@ const validateTitle = () => {
   const valueLength = adTitleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
-    setRedBorder(adTitleInput, true);
     adTitleInput.setCustomValidity(`Введите ещё ${  MIN_TITLE_LENGTH - valueLength } симв.`);
   } else if (valueLength > MAX_TITLE_LENGTH) {
-    setRedBorder(adTitleInput, true);
     adTitleInput.setCustomValidity(`Удалите лишние ${  valueLength - MAX_TITLE_LENGTH } симв.`);
   } else {
     adTitleInput.setCustomValidity('');
-    setRedBorder(adTitleInput, false);
   }
-
-  adTitleInput.reportValidity();
 };
 
 const setMinPrice = () => {
@@ -62,14 +72,10 @@ const validatePrice = () => {
   const minPrice = MIN_PRICES[adTypeInput.value];
   const maxPrice = adPriceInput.max;
   if (+adPriceInput.value < minPrice || +adPriceInput.value > maxPrice) {
-    setRedBorder(adPriceInput, true);
     adPriceInput.setCustomValidity(`Укажите цену от ${minPrice} до ${maxPrice}`);
   } else {
     adPriceInput.setCustomValidity('');
-    setRedBorder(adPriceInput, false);
   }
-
-  adPriceInput.reportValidity();
 };
 
 const setAddress = (lat, lng) => {
@@ -80,11 +86,7 @@ const disableOptions = () => {
   const availableValues = getAvailableValues();
 
   Array.from(adGuestsInput.options).forEach((option) => {
-    if (!availableValues.includes(+option.value)) {
-      option.disabled = true;
-    } else {
-      option.disabled = false;
-    }
+    option.disabled = !availableValues.includes(+option.value);
   });
 };
 
@@ -99,8 +101,6 @@ const validateGuestNumber = () => {
   } else {
     adGuestsInput.setCustomValidity('Недопустимое количество гостей');
   }
-
-  adGuestsInput.reportValidity();
 };
 
 const changeTimeIn = () => {
@@ -118,14 +118,29 @@ const setResetCallback = (callback) => {
 };
 
 const setFormListeners = () => {
-  adTitleInput.addEventListener('input', () => validateTitle());
-  adPriceInput.addEventListener('input', () => validatePrice());
-  adTypeInput.addEventListener('change', () => setMinPrice());
-  adRoomsInput.addEventListener('change', () => disableOptions());
+  adTitleInput.addEventListener('input', () => {
+    validateTitle();
+    unmarkValidInputs();
+  });
+  adPriceInput.addEventListener('input', () => {
+    validatePrice();
+    unmarkValidInputs();
+  });
+  adTypeInput.addEventListener('change', () => {
+    setMinPrice();
+    unmarkValidInputs();
+  });
+  adRoomsInput.addEventListener('change', () => {
+    disableOptions();
+    unmarkValidInputs();
+  });
   timeIn.addEventListener('change', () => changeTimeIn());
   timeOut.addEventListener('change', () => changeTimeOut());
 
-  submitButton.addEventListener('click', () => validateGuestNumber());
+  submitButton.addEventListener('click', () => {
+    validateGuestNumber();
+    markValidInputs();
+  });
 };
 
 const setSubmitCallback = (callback) => {

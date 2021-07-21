@@ -40,8 +40,7 @@ const checkFilterFeatures = (ad = []) => {
   return !selectedFeatures.length || selectedFeatures.every((feature) => ad.includes(feature));
 };
 
-
-const getFiltredAds = (adverts) => adverts.filter((ad) => checkFilterType(ad.offer.type) && checkFilterPrice(ad.offer.price) && checkFilterRooms(ad.offer.rooms) && checkFilterGusts(ad.offer.guests) && checkFilterFeatures(ad.offer.features)).slice(0, MAX_ADS);
+const getFilteredAds = (adverts) => adverts.filter((ad) => checkFilterType(ad.offer.type) && checkFilterPrice(ad.offer.price) && checkFilterRooms(ad.offer.rooms) && checkFilterGusts(ad.offer.guests) && checkFilterFeatures(ad.offer.features)).slice(0, MAX_ADS);
 
 const setFilterChangeCallback = (callback) => {
   filterForm.addEventListener('change', () => {
@@ -50,7 +49,8 @@ const setFilterChangeCallback = (callback) => {
 };
 
 export {
+  filterForm,
   filterAdsNumber,
-  getFiltredAds,
+  getFilteredAds,
   setFilterChangeCallback
 };
