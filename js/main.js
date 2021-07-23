@@ -43,6 +43,10 @@ import {
   debounce
 } from './utils.js';
 
+import {
+  resetImage
+} from './image.js';
+
 deactivateForm();
 
 setLoadCallback(() => {
@@ -69,6 +73,7 @@ const resetPage = () => {
   resetMap();
   resetFilterForm();
   resetAdForm();
+  resetImage();
 
   setTimeout(() => {
     setAddress(DEFAULT_COORDINATES.lat, DEFAULT_COORDINATES.lng);

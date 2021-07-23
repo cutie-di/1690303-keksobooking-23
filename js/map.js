@@ -5,13 +5,13 @@ import {
 const symbolsAfterPoint = 5;
 const MAP_SCALE = 13;
 const MAIN_ICON_SIZE = [52, 52];
-const MAIN_ICON_ANCOR = [26, 52];
+const MAIN_ICON_ANCHOR = [26, 52];
 const COMMON_ICON_SIZE = [40, 40];
 const COMMON_ICON_ANCHOR = [20, 40];
 
 const DEFAULT_COORDINATES = {
   lat: 35.67173,
-  lng: 139.7318,
+  lng: 139.73182,
 };
 
 const map =
@@ -35,7 +35,7 @@ const setLoadCallback = (callback) => {
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
   iconSize: MAIN_ICON_SIZE,
-  iconAnchor: MAIN_ICON_ANCOR,
+  iconAnchor: MAIN_ICON_ANCHOR,
 });
 
 const mainPinMarker = L.marker({
