@@ -5,6 +5,8 @@ const filterRooms = filterForm.querySelector('#housing-rooms');
 const filterGuests = filterForm.querySelector('#housing-guests');
 const DEFAULT = 'any';
 const MAX_ADS = 10;
+const LOW_PRICE = 10000;
+const HIGH_PRICE = 50000;
 
 const filterAdsNumber = (adsArray) => adsArray.slice(0, MAX_ADS);
 
@@ -16,11 +18,11 @@ const checkFilterPrice = (ad) => {
 
   switch (filterPrice.value) {
     case 'low':
-      return (price < 10000);
+      return (price < LOW_PRICE);
     case 'middle':
-      return (price >= 10000) && (price <= 50000);
+      return (price >= LOW_PRICE) && (price <= HIGH_PRICE);
     case 'high':
-      return (price > 50000);
+      return (price > HIGH_PRICE);
     default:
       return DEFAULT;
   }
